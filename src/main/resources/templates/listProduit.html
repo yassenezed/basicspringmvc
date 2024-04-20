@@ -1,30 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+        xmlns:th="http://www.thymeleaf.com"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="template" lang="en">
 <head>
     <meta charset="utf-8"/>
     <title>Index page</title>
-
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
+    <script src="webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
-<a href="ajouterproduit">Ajouter Produit</a>
-<div class="container">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Reference</th>
-            <th>Designation</th>
-            <th>Prix</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="produit:${listProduits}">
-            <td th:text="${produit.getId()}"></td>
-            <td th:text="${produit.getDescription()}"></td>
-            <td th:text="${produit.getPrice()}"></td>
-        </tr>
-        </tbody>
-    </table>
+<div layout:fragment="content">
+
+    <div class="container">
+        <a href="ajouterproduit">+ Ajouter Produit</a>
+        <form class="float-right" th:action="@{/getProductsList}" method="get">
+            <div class="float-end">
+                <input class="form-control" type="text" name="keywords" placeholder="taper votre keyword">
+                <button type="submit">Search</button>
+            </div>
+        </form>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Reference</th>
+                <th>Designation</th>
+                <th>Prix</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="produit:${listProduits}">
+                <td><a th:href="@{/afficherproduits/{id}(id=${produit.id})}" th:text="${produit.getId()}"></a></td>
+                <td><a th:href="@{/afficherproduits/{id}(id=${produit.id})}" th:text="${produit.getDescription()}"></a></td>
+                <td><a th:href="@{/afficherproduits/{id}(id=${produit.id})}" th:text="${produit.getPrice()}"></a></td>
+                <td><a th:href="@{/modifierproduit/{id}(id=${produit.id})}">Modifier</a></td>
+                <td><a th:href="@{/supprimerproduit/{id}(id=${produit.id})}">Supprimer</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="container">
+            <ul class="nav nav-pills">
+                <li class="nav-item me-2" th:each="p, stat: ${pages}">
+                    <a th:class="${stat.index} == ${currentPage} ? 'btn btn-primary' : 'btn btn-outline-primary'"
+                       th:text="${stat.index}" th:href="@{getProductsList(page=${stat.index})}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 </body>

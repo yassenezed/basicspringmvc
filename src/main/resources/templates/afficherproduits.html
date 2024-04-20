@@ -11,13 +11,22 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <form method="post" action="ajouterproduit">
-        Description: <input name="description" type="text">
-        <span class="text-danger"  th:errors="${product.description}"></span>
-        price:       <input name="price" type="text">
-        <span class="text-danger"  th:errors="${product.price}"></span>
-        <input type="submit" value="Ajouter">
-    </form>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Reference</th>
+        <th>Designation</th>
+        <th>Prix</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${listpdts.getId()}"></td>
+        <td th:text="${listpdts.getDescription()}"></td>
+        <td th:text="${listpdts.getPrice()}"></td>
+    </tr>
+    </tbody>
+</table>
 </div>
 </body>
 </html>

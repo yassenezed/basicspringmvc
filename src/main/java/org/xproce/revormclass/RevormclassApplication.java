@@ -26,6 +26,7 @@ public class RevormclassApplication implements CommandLineRunner {
         productManager.addProduct(product1);
         productManager.addProduct(product2);
 
+
         System.out.println(productManager.getAllProducts());
 
     }
